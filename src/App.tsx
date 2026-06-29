@@ -10,7 +10,7 @@ import { AdminPage } from './pages/AdminPage';
 import { isFirebaseConfigured } from './firebase/firebase';
 import { AlertTriangle } from 'lucide-react';
 
-// ── Error Boundary ────────────────────────────────────────────
+
 class ErrorBoundary extends Component<
   { children: ReactNode },
   { hasError: boolean; message: string }
@@ -46,7 +46,7 @@ class ErrorBoundary extends Component<
   }
 }
 
-// ── Firebase not configured banner ───────────────────────────
+
 function FirebaseBanner() {
   if (isFirebaseConfigured) return null;
   return (
@@ -66,7 +66,7 @@ function FirebaseBanner() {
   );
 }
 
-// ── Shared layout ─────────────────────────────────────────────
+
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-zinc-950">
@@ -83,7 +83,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ── App ───────────────────────────────────────────────────────
+
 export default function App() {
   return (
     <ErrorBoundary>

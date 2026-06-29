@@ -13,7 +13,13 @@ interface TimeLeft {
 }
 
 function getTimeLeft(targetDate: string): TimeLeft {
-  const diff = new Date(targetDate).getTime() - Date.now();
+  
+  let safeDate = targetDate;
+  if (!safeDate.includes('T')) {
+    safeDate += 'T00:00:00';
+  }
+
+  const diff = new Date(safeDate).getTime() - Date.now();
   if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -60,7 +66,7 @@ export function CountdownTimer({ targetDate }: CountdownTimerProps) {
     return (
       <div className="flex items-center gap-2 text-red-400 font-rajdhani font-bold text-xl tracking-widest">
         <Clock className="w-5 h-5 animate-pulse" />
-        GARA IN CORSO
+        RACE DAY
       </div>
     );
   }

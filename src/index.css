@@ -5,7 +5,6 @@
   --font-rajdhani: 'Rajdhani', sans-serif;
   --font-inter: 'Inter', sans-serif;
 
-  /* Motorsport color tokens */
   --color-racing-lime: #a3e635;
   --color-racing-lime-glow: rgba(163, 230, 53, 0.15);
   --color-racing-red: #ef4444;
@@ -13,7 +12,6 @@
   --color-racing-gold: #fbbf24;
 }
 
-/* ── Base ─────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -29,16 +27,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Font utilities ───────────────────────────────────── */
 .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
 
-/* ── Scrollbar ────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: #18181b; }
 ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #52525b; }
 
-/* ── Neon glow utilities ──────────────────────────────── */
 .glow-lime {
   box-shadow: 0 0 12px rgba(163, 230, 53, 0.4), 0 0 24px rgba(163, 230, 53, 0.15);
 }
@@ -51,7 +46,6 @@ body {
 .text-glow-lime { text-shadow: 0 0 8px rgba(163, 230, 53, 0.6); }
 .text-glow-red { text-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
 
-/* ── Racing card hover effect ─────────────────────────── */
 .racing-card {
   background: linear-gradient(135deg, #1c1c1e 0%, #141414 100%);
   border: 1px solid #27272a;
@@ -63,7 +57,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* ── Podium card variants ─────────────────────────────── */
 .podium-1 {
   border-color: #fbbf24;
   box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
@@ -80,7 +73,6 @@ body {
   background: linear-gradient(135deg, #1a1008 0%, #141414 100%);
 }
 
-/* ── Button styles ────────────────────────────────────── */
 .btn-primary {
   background: #a3e635;
   color: #09090b;
@@ -135,7 +127,6 @@ body {
   border-color: #71717a;
 }
 
-/* ── Table styling ────────────────────────────────────── */
 .race-table th {
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
@@ -154,7 +145,6 @@ body {
   background: rgba(255,255,255,0.02);
 }
 
-/* ── Section title ────────────────────────────────────── */
 .section-title {
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
@@ -165,14 +155,12 @@ body {
 }
 .section-title span { color: #a3e635; }
 
-/* ── Hero stripe accent ───────────────────────────────── */
 .hero-stripe {
   background: linear-gradient(90deg, #a3e635 0%, transparent 100%);
   height: 3px;
   width: 60px;
 }
 
-/* ── Kart number badge ────────────────────────────────── */
 .kart-badge {
   background: rgba(163, 230, 53, 0.1);
   border: 1px solid rgba(163, 230, 53, 0.3);
@@ -185,7 +173,6 @@ body {
   font-size: 0.85rem;
 }
 
-/* ── Weather badge ────────────────────────────────────── */
 .weather-badge {
   display: inline-flex;
   align-items: center;
@@ -199,7 +186,6 @@ body {
   text-transform: uppercase;
 }
 
-/* ── Page wrapper ─────────────────────────────────────── */
 .page-container {
   max-width: 80rem;
   margin: 0 auto;

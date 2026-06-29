@@ -19,7 +19,6 @@ export function HomePage() {
 
   const isLoading = dLoading || eLoading || rLoading;
 
-  // Next upcoming event
   const now = new Date();
   const nextEvent: Event | null =
     events
@@ -59,7 +58,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Standings Preview */}
+      {/* Standings */}
       <section className="bg-zinc-900/30 py-16 px-4 sm:px-6 border-t border-zinc-800">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-8">
@@ -93,7 +92,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Driver modal */}
+      {/* Driver */}
       {modalEntry && (
         <DriverModal
           entry={modalEntry}
