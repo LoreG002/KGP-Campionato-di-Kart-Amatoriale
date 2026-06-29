@@ -74,7 +74,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       <main>{children}</main>
       <footer className="border-t border-zinc-800 py-6 px-4 text-center">
         <p className="font-rajdhani text-zinc-600 text-sm tracking-widest uppercase">
-          K<span className="text-lime-400">-GP</span> — Campionato Amatoriale{' '}
+          K<span className="text-lime-400">-GP</span> — Campionato di Kart{' '}
           {new Date().getFullYear()}
         </p>
       </footer>
