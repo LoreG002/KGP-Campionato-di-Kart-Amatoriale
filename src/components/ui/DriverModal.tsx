@@ -28,7 +28,6 @@ interface DriverModalProps {
 export function DriverModal({ entry, events, onClose }: DriverModalProps) {
   const { driver } = entry;
 
-  // Close on Escape
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -37,7 +36,6 @@ export function DriverModal({ entry, events, onClose }: DriverModalProps) {
     return () => window.removeEventListener('keydown', handler);
   }, [onClose]);
 
-  // Chart data
   const chartData = events
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .map((event, i) => {
