@@ -1,0 +1,135 @@
+// ===============================================================
+// KART Championship Manager — Firestore Security Rules
+// ===============================================================
+//
+// Assumed Data Model:
+//
+// Collection: drivers
+// Fields:
+//   - name: string (required, 2-80 chars)
+//   - kartNumber: number (required, 1-99)
+//   - photoUrl: string (optional, URL, max 500 chars)
+//   - team: string (optional, max 80 chars)
+//   - createdAt: timestamp (optional, auto-set)
+//   - updatedAt: timestamp (optional, auto-set)
+//
+// Collection: events
+// Fields:
+//   - name: string (required, 2-100 chars)
+//   - date: string (required, ISO date, max 20 chars)
+//   - circuitName: string (required, 2-100 chars)
+//   - trackLength: number (required, 100-5000)
+//   - weather: string (required, enum: sunny/cloudy/rain/wet)
+//   - imageUrl: string (optional, URL, max 500 chars)
+//   - createdAt: timestamp (optional)
+//   - updatedAt: timestamp (optional)
+//
+// Collection: results
+// Fields:
+//   - eventId: string (required, max 128 chars)
+//   - raceNumber: number (required, 1 or 2)
+//   - driverId: string (required, max 128 chars)
+//   - position: number (required, 0-15)
+//   - hasPole: boolean (required)
+//   - hasBestLap: boolean (required)
+//   - hasConsistency: boolean (required)
+//   - penaltyPoints: number (required, 0-50)
+//   - createdAt: timestamp (optional)
+//
+// ===============================================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper Functions ──────────────────────────────────────
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isValidUrl(url) {
+      return url is string &&
+             url.size() <= 500 &&
+             (url.matches('^https://.*') || url.matches('^http://.*'));
+    }
+
+    function validStringLength(field, minLen, maxLen) {
+      return request.resource.data[field] is string &&
+             request.resource.data[field].size() >= minLen &&
+             request.resource.data[field].size() <= maxLen;
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    // ── Domain Validators ─────────────────────────────────────
+
+    function isValidDriver(data) {
+      let allowedWeather = ['sunny', 'cloudy', 'rain', 'wet'];
+      return hasOnlyAllowedFields(['name', 'kartNumber', 'photoUrl', 'team', 'createdAt', 'updatedAt']) &&
+             data.name is string && data.name.size() >= 2 && data.name.size() <= 80 &&
+             data.kartNumber is number && data.kartNumber >= 1 && data.kartNumber <= 99 &&
+             (!('photoUrl' in data) || data.photoUrl == '' || isValidUrl(data.photoUrl)) &&
+             (!('team' in data) || (data.team is string && data.team.size() <= 80));
+    }
+
+    function isValidEvent(data) {
+      let allowedWeather = ['sunny', 'cloudy', 'rain', 'wet'];
+      return hasOnlyAllowedFields(['name', 'date', 'circuitName', 'trackLength', 'weather', 'imageUrl', 'createdAt', 'updatedAt']) &&
+             data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
+             data.date is string && data.date.size() >= 6 && data.date.size() <= 20 &&
+             data.circuitName is string && data.circuitName.size() >= 2 && data.circuitName.size() <= 100 &&
+             data.trackLength is number && data.trackLength >= 100 && data.trackLength <= 5000 &&
+             data.weather in allowedWeather &&
+             (!('imageUrl' in data) || data.imageUrl == '' || isValidUrl(data.imageUrl));
+    }
+
+    function isValidResult(data) {
+      return hasOnlyAllowedFields(['eventId', 'raceNumber', 'driverId', 'position', 'hasPole', 'hasBestLap', 'hasConsistency', 'penaltyPoints', 'createdAt']) &&
+             data.eventId is string && data.eventId.size() >= 1 && data.eventId.size() <= 128 &&
+             data.raceNumber is number && data.raceNumber in [1, 2] &&
+             data.driverId is string && data.driverId.size() >= 1 && data.driverId.size() <= 128 &&
+             data.position is number && data.position >= 0 && data.position <= 15 &&
+             data.hasPole is bool &&
+             data.hasBestLap is bool &&
+             data.hasConsistency is bool &&
+             data.penaltyPoints is number && data.penaltyPoints >= 0 && data.penaltyPoints <= 50;
+    }
+
+    // ── Drivers Collection ────────────────────────────────────
+    // Public read (needed for the standings and driver cards).
+    // Write only for authenticated admin.
+
+    match /drivers/{driverId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && isValidDriver(request.resource.data);
+      allow update: if isAuthenticated() && isValidDriver(request.resource.data);
+      allow delete: if isAuthenticated();
+    }
+
+    // ── Events Collection ─────────────────────────────────────
+
+    match /events/{eventId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && isValidEvent(request.resource.data);
+      allow update: if isAuthenticated() && isValidEvent(request.resource.data);
+      allow delete: if isAuthenticated();
+    }
+
+    // ── Results Collection ────────────────────────────────────
+
+    match /results/{resultId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && isValidResult(request.resource.data);
+      allow update: if isAuthenticated() && isValidResult(request.resource.data);
+      allow delete: if isAuthenticated();
+    }
+
+    // ── Deny everything else ──────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-rajdhani: 'Rajdhani', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+
+  /* Motorsport color tokens */
+  --color-racing-lime: #a3e635;
+  --color-racing-lime-glow: rgba(163, 230, 53, 0.15);
+  --color-racing-red: #ef4444;
+  --color-racing-red-glow: rgba(239, 68, 68, 0.15);
+  --color-racing-gold: #fbbf24;
+}
+
+/* ── Base ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #09090b; /* zinc-950 */
+  color: #e4e4e7; /* zinc-200 */
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Font utilities ───────────────────────────────────── */
+.font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+
+/* ── Scrollbar ────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #18181b; }
+::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #52525b; }
+
+/* ── Neon glow utilities ──────────────────────────────── */
+.glow-lime {
+  box-shadow: 0 0 12px rgba(163, 230, 53, 0.4), 0 0 24px rgba(163, 230, 53, 0.15);
+}
+.glow-red {
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.4), 0 0 24px rgba(239, 68, 68, 0.15);
+}
+.glow-gold {
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.4), 0 0 24px rgba(251, 191, 36, 0.15);
+}
+.text-glow-lime { text-shadow: 0 0 8px rgba(163, 230, 53, 0.6); }
+.text-glow-red { text-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+
+/* ── Racing card hover effect ─────────────────────────── */
+.racing-card {
+  background: linear-gradient(135deg, #1c1c1e 0%, #141414 100%);
+  border: 1px solid #27272a;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+.racing-card:hover {
+  border-color: #a3e635;
+  box-shadow: 0 0 20px rgba(163, 230, 53, 0.1), 0 4px 24px rgba(0,0,0,0.4);
+  transform: translateY(-2px);
+}
+
+/* ── Podium card variants ─────────────────────────────── */
+.podium-1 {
+  border-color: #fbbf24;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
+  background: linear-gradient(135deg, #1f1c0a 0%, #141414 100%);
+}
+.podium-2 {
+  border-color: #a1a1aa;
+  box-shadow: 0 0 20px rgba(161, 161, 170, 0.1);
+  background: linear-gradient(135deg, #1a1a1e 0%, #141414 100%);
+}
+.podium-3 {
+  border-color: #b45309;
+  box-shadow: 0 0 20px rgba(180, 83, 9, 0.15);
+  background: linear-gradient(135deg, #1a1008 0%, #141414 100%);
+}
+
+/* ── Button styles ────────────────────────────────────── */
+.btn-primary {
+  background: #a3e635;
+  color: #09090b;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: #bef264;
+  box-shadow: 0 0 16px rgba(163, 230, 53, 0.5);
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+.btn-danger:hover {
+  background: #f87171;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.4);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #71717a;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: 1px solid #3f3f46;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn-ghost:hover {
+  color: #e4e4e7;
+  border-color: #71717a;
+}
+
+/* ── Table styling ────────────────────────────────────── */
+.race-table th {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #71717a;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #27272a;
+}
+.race-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid #18181b;
+}
+.race-table tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+/* ── Section title ────────────────────────────────────── */
+.section-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.section-title span { color: #a3e635; }
+
+/* ── Hero stripe accent ───────────────────────────────── */
+.hero-stripe {
+  background: linear-gradient(90deg, #a3e635 0%, transparent 100%);
+  height: 3px;
+  width: 60px;
+}
+
+/* ── Kart number badge ────────────────────────────────── */
+.kart-badge {
+  background: rgba(163, 230, 53, 0.1);
+  border: 1px solid rgba(163, 230, 53, 0.3);
+  color: #a3e635;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+}
+
+/* ── Weather badge ────────────────────────────────────── */
+.weather-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Page wrapper ─────────────────────────────────────── */
+.page-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 6rem 1rem 3rem;
+}
+
+@media (min-width: 640px) {
+  .page-container { padding: 6rem 1.5rem 3rem; }
+}
