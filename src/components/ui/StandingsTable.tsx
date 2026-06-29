@@ -1,5 +1,6 @@
 import type { StandingsEntry, Event } from '../../types';
 import { Trophy, ChevronDown, ChevronUp, Minus, Zap, Flag, Target } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface StandingsTableProps {
   standings: StandingsEntry[];
@@ -160,13 +161,13 @@ export function StandingsTable({
 
       {compact && standings.length > 8 && (
         <div className="text-center py-3 border-t border-zinc-800">
-          <a
-            href="/classifica"
-            className="font-rajdhani text-xs tracking-widest text-zinc-500 hover:text-lime-400 uppercase transition-colors"
-          >
-            Vedi Classifica Completa →
-          </a>
-        </div>
+        <Link
+          to="/classifica"
+          className="font-rajdhani text-xs tracking-widest text-zinc-500 hover:text-lime-400 uppercase transition-colors"
+        >
+          Vedi Classifica Completa →
+        </Link>
+      </div>
       )}
     </div>
   );
