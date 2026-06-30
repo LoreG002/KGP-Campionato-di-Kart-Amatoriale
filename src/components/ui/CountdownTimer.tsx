@@ -66,7 +66,7 @@ export function CountdownTimer({ targetDate }: CountdownTimerProps) {
     return (
       <div className="flex items-center gap-2 text-red-400 font-rajdhani font-bold text-xl tracking-widest">
         <Clock className="w-5 h-5 animate-pulse" />
-        RACE DAY
+        GARA IN CORSO
       </div>
     );
   }
