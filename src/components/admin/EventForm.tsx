@@ -24,14 +24,25 @@ const WEATHER_OPTIONS: { value: WeatherCondition; label: string }[] = [
 ];
 
 export function EventForm({ existing, onDone }: EventFormProps) {
+  
+  // Helper per formattare la data per l'input datetime-local (YYYY-MM-DDTHH:mm)
+  const formatInitialDate = (dateStr?: string) => {
+    if (!dateStr) return '';
+    if (dateStr.includes('T')) {
+      return dateStr.slice(0, 16); // Se ha già l'orario, lo taglia ai minuti (ignora i secondi)
+    }
+    return `${dateStr}T00:00`; // Se è solo data (YYYY-MM-DD), aggiunge la mezzanotte
+  };
+
   const [form, setForm] = useState<EventFormData>({
     name: existing?.name ?? '',
-    date: existing?.date ?? '',
+    date: formatInitialDate(existing?.date),
     circuitName: existing?.circuitName ?? '',
     trackLength: existing?.trackLength ?? 1200,
     weather: existing?.weather ?? 'sunny',
     imageUrl: existing?.imageUrl ?? '',
   });
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -105,8 +116,15 @@ export function EventForm({ existing, onDone }: EventFormProps) {
           <input name="name" value={form.name} onChange={handleChange} required placeholder="Round 1 — Parma Karting" className={inputClass} />
         </div>
         <div>
-          <label className={labelClass}>Data</label>
-          <input name="date" type="date" value={form.date} onChange={handleChange} required className={inputClass} />
+          <label className={labelClass}>Data e Ora</label>
+          <input 
+            name="date" 
+            type="datetime-local" 
+            value={form.date} 
+            onChange={handleChange} 
+            required 
+            className={inputClass} 
+          />
         </div>
         <div>
           <label className={labelClass}>Meteo</label>
